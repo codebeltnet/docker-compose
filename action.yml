@@ -1,0 +1,32 @@
+name: Docker Compose
+description: Runs docker compose with specified compose files, command and optional options.
+inputs:
+  composeFiles:
+    description: Path to one or more docker-compose files. Supports globbing.
+    required: true
+    default: '**/docker-compose.yml'
+  command:
+    description: The command to run.
+    required: true
+  options:
+    description: Additional docker compose options.
+    required: false
+    default: ''
+runs:
+  using: composite
+  steps:
+    - if: (runner.os == 'Linux')
+      run: |
+        shopt -s globstar
+        files=""
+        for file in ${{ inputs.composeFiles }}; do
+          files="$files -f $file
+          echo "Compose file: '$file'"
+        done
+        docker compose $files ${{ inputs.command }} ${{ inputs.options }}
+        echo "Compose command: '${{ inputs.command }}'"
+        echo "Comoose options: '${{ inputs.options }}'"
+      shell: bash
+branding:
+  icon: 'umbrella'
+  color: 'blue'
