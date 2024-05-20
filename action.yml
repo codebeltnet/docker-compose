@@ -21,11 +21,9 @@ runs:
         files=""
         for file in ${{ inputs.composeFiles }}; do
           files="$files -f $file
-          echo "Compose file: '$file'"
         done
         docker compose $files ${{ inputs.command }} ${{ inputs.options }}
-        echo "Compose command: '${{ inputs.command }}'"
-        echo "Comoose options: '${{ inputs.options }}'"
+        echo "Compose files: '$files'"
       shell: bash
 branding:
   icon: 'umbrella'
