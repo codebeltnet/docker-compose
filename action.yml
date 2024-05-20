@@ -20,8 +20,9 @@ runs:
         shopt -s globstar
         files=""
         for file in ${{ inputs.composeFiles }}; do
-          files="$files -f $file
+          files="$files -f $file"
         done
+        files="${files# }"
         docker compose $files ${{ inputs.command }} ${{ inputs.options }}
         echo "Compose files: '$files'"
       shell: bash
