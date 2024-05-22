@@ -17,7 +17,7 @@ runs:
   steps:
     - if: (runner.os == 'Linux')
       run: |
-        shopt -s globstar
+        shopt -s globstar extglob
         files=""
         for file in ${{ inputs.composeFiles }}; do
           files="$files -f $file"
